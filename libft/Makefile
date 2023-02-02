@@ -6,7 +6,7 @@
 #    By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 10:22:36 by mdoll             #+#    #+#              #
-#    Updated: 2023/01/31 12:39:48 by mdoll            ###   ########.fr        #
+#    Updated: 2023/02/01 13:54:41 by mdoll            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,10 +33,10 @@ $(NAME): $(OBJS)
 	@ ar rcs $(NAME) $(OBJS)
 
 clean:
-	rm -f *.o printf/*.o gnl/*.o
+	@ rm -f *.o printf/*.o gnl/*.o
 
 fclean: clean
-	rm -f $(NAME)
+	@ rm -f $(NAME)
 	
 re: fclean all
 

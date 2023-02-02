@@ -6,7 +6,7 @@
 #    By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/01 09:23:42 by mdoll             #+#    #+#              #
-#    Updated: 2023/02/01 09:35:03 by mdoll            ###   ########.fr        #
+#    Updated: 2023/02/01 14:02:14 by mdoll            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,35 +14,50 @@ NAME	:= pipex
 CC		:= gcc
 CFLAGS	:= -Wall -Wextra -Werror
 
-SRCS	:=	src/pipex.c
+SRCS	:=	pipex.c pipex_utils.c
 
 OBJS	:= $(SRCS:.c=.o)
 
-RM		    := rm -f
+RM		:= rm -f
+
+b	=	\033[1;30m
+r	=	\033[1;31m
+g	=	\033[1;32m
+y	=	\033[1;33m
+bl	=	\033[1;34m
+p	=	\033[1;35m
+c	=	\033[1;36m
+w	=	\033[1;37m
+end =	[0m
 
 %.o: %.c
 	@ $(CC) -c $(CFLAGS) $< -o ${<:.c=.o}
 
-all:		${NAME}
+all:	${NAME}
 
 $(NAME): $(OBJS)
-	@ echo "\033[1;31mcompiling[0m"
+	@ echo "${r}compiling${end}"
 	@ make all -C ./libft
 	@ cp ./libft/libft.a .
 	@ $(CC) $(CFLAGS) -o $(NAME) $(OBJS) libft.a
-	@ echo "\033[1;32mfinished compiling.[0m"
-	@ echo " "
-	@ echo "\033[1;34mUse: ./pipex file1 cmd1 cmd2 file2 to run the progam[0m"
+	@ echo "${g}finished compiling.${end}"
+	@ echo "${bl}Use: ./pipex file1 cmd1 cmd2 file2 to run the progam${end}"
 
 clean:
 	@${RM} $(OBJS)
 	@make clean -C ./libft
+	@ echo "${r}al${g}l ${y}cl${bl}ea${p}ne${c}d!${end}"
 
 fclean:	clean
 	@ ${RM} ${NAME}
 	@ make fclean -C ./libft
 	@ ${RM} libft.a
 
+files: all
+	@ ${RM} *.txt
+	@ touch file1.txt
+	@ touch file2.txt
+
 re:			fclean all
 
-.PHONY:		all clean fclean re
+.PHONY:		all clean fclean re files
