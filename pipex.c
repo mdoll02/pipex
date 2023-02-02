@@ -6,7 +6,7 @@
 /*   By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 10:26:59 by mdoll             #+#    #+#             */
-/*   Updated: 2023/02/01 13:37:44 by mdoll            ###   ########.fr       */
+/*   Updated: 2023/02/02 13:46:24 by mdoll            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ int	main(int argc, char **argv)
 		perror ("error while opening outfile");
 		exit(-1);
 	}
+	pipex(fd_infile, fd_outfile, argv);
 	return (0);
 }

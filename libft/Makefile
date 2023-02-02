@@ -6,7 +6,7 @@
 #    By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 10:22:36 by mdoll             #+#    #+#              #
-#    Updated: 2023/02/01 13:54:41 by mdoll            ###   ########.fr        #
+#    Updated: 2023/02/02 15:44:40 by mdoll            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,11 +26,12 @@ CFLAGS = -Wall -Wextra -Werror
 %.o: %.c
 	@ $(CC) -c $(CFLAGS) $< -o ${<:.c=.o}
 
-all: $(NAME)
 
 $(NAME): $(OBJS)
 	@ gcc $(CFLAGS) -c $(SRC)
 	@ ar rcs $(NAME) $(OBJS)
+
+all: $(NAME)
 
 clean:
 	@ rm -f *.o printf/*.o gnl/*.o

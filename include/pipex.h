@@ -6,7 +6,7 @@
 /*   By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 09:35:19 by mdoll             #+#    #+#             */
-/*   Updated: 2023/02/01 14:07:17 by mdoll            ###   ########.fr       */
+/*   Updated: 2023/02/02 13:46:31 by mdoll            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,7 @@
 # include <stdlib.h>
 # include <stdio.h> // perror | strerror
 # include <sys/wait.h>
+
+void	pipex(int fd1, int fd2, char **arvg);
 
 #endif

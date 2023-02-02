@@ -6,7 +6,7 @@
 #    By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/01 09:23:42 by mdoll             #+#    #+#              #
-#    Updated: 2023/02/01 14:02:14 by mdoll            ###   ########.fr        #
+#    Updated: 2023/02/02 15:46:38 by mdoll            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,25 +33,28 @@ end =	[0m
 %.o: %.c
 	@ $(CC) -c $(CFLAGS) $< -o ${<:.c=.o}
 
-all:	${NAME}
 
 $(NAME): $(OBJS)
 	@ echo "${r}compiling${end}"
-	@ make all -C ./libft
+	@ make all -C ./libft >/dev/null 2>&1
 	@ cp ./libft/libft.a .
 	@ $(CC) $(CFLAGS) -o $(NAME) $(OBJS) libft.a
 	@ echo "${g}finished compiling.${end}"
 	@ echo "${bl}Use: ./pipex file1 cmd1 cmd2 file2 to run the progam${end}"
 
+all:	${NAME}
+
 clean:
 	@${RM} $(OBJS)
 	@make clean -C ./libft
-	@ echo "${r}al${g}l ${y}cl${bl}ea${p}ne${c}d!${end}"
+	@ echo "${y}cl${bl}ea${p}ne${c}d!${end}"
 
-fclean:	clean
+fclean:
 	@ ${RM} ${NAME}
 	@ make fclean -C ./libft
 	@ ${RM} libft.a
+	@ echo "${y}eve${bl}ryt${p}hi${c}ng${end}"
+	@ make clean
 
 files: all
 	@ ${RM} *.txt
