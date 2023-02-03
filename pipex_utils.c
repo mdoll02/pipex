@@ -6,58 +6,44 @@
 /*   By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 13:50:02 by mdoll             #+#    #+#             */
-/*   Updated: 2023/02/02 15:53:20 by mdoll            ###   ########.fr       */
+/*   Updated: 2023/02/03 15:47:03 by mdoll            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/pipex.h"
 
-void	child(int fd1, int *end, char *cmd1)
+char	*get_path(char *cmd, char **envp)
 {
-	printf("child");
+	int		i;
+	char	**paths;
+
+	i = 0;
+	while (ft_strnstr(envp[i], "PATH", 4) == NULL)
+		i++;
+	paths = ft_split(envp[i], ':');
+	i = 0;
+	while (paths[i++] != NULL)
+		printf("%s\n", paths[i]);
+	printf("Command: %s\n", cmd);
+	return (NULL);
+}
+
+void	child(int fd1, int *end, char *cmd1, char **envp)
+{
+	ft_printf("child\t");
 	dup2(fd1, STDIN_FILENO);
 	dup2(end[1], STDOUT_FILENO);
 	close(end[0]);
 	close(fd1);
-	printf("ello im child\n");
-	printf("%s\n", cmd1);
+	get_path(cmd1, envp);
 }
 
-void	parent(int fd2, int *end, char *cmd2)
+void	parent(int fd2, int *end, char *cmd2, char **envp)
 {
-	printf("parent");
+	ft_printf("parent\t");
 	dup2(end[0], STDIN_FILENO);
 	dup2(fd2, STDOUT_FILENO);
 	close(end[1]);
 	close(fd2);
-	printf("ello its me . da perent\n");
-	printf("%s\n", cmd2);
-}
-
-void	pipex(int fd1, int fd2, char **argv)
-{
-	int		end[2];
-	int		error;
-	pid_t	pid;
-	int		status;
-
-	error = pipe(end);
-	printf("created pipe\n");
-	if (error == -1)
-	{
-		perror("error while creating pipe");
-		exit(-1);
-	}
-	pid = fork();
-	printf("%d\n", pid);
-	if (pid == -1)
-	{
-		perror("error while forking");
-		exit(-1);
-	}
-	else
-		child(fd1, end, argv[2]);
-	printf("%d\n", pid);
-	waitpid(-1, &status, 0);
-	parent(fd2, end, argv[3]);
+	get_path(cmd2, envp);
 }
