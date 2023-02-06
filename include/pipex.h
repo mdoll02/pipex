@@ -6,7 +6,7 @@
 /*   By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 09:35:19 by mdoll             #+#    #+#             */
-/*   Updated: 2023/02/03 15:30:52 by mdoll            ###   ########.fr       */
+/*   Updated: 2023/02/06 14:12:23 by mdoll            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,7 @@ void	pipex(int fd1, int fd2, char **arvg, char **envp);
 void	parent(int fd2, int *end, char *cmd2, char **envp);
 char	*get_path(char *cmd, char **envp);
 void	child(int fd1, int *end, char *cmd1, char **envp);
+void	error(char *str);
+void	execute(char *cmd, char **envp);
 
 #endif
