@@ -6,7 +6,7 @@
 /*   By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 13:50:02 by mdoll             #+#    #+#             */
-/*   Updated: 2023/02/06 14:16:01 by mdoll            ###   ########.fr       */
+/*   Updated: 2023/02/09 12:35:11 by mdoll            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,53 +26,49 @@ char	*get_path(char *cmd, char **envp)
 	while (paths[++i])
 	{
 		paths[i] = ft_strjoin(paths[i], "/");
-		if (!paths[i])
-			error("strjoin error");
 		cmd_path = ft_strjoin(paths[i], cmd);
-		if (!cmd_path)
-			error("strjoin error");
 		if (access(cmd_path, F_OK) == 0)
-			return (cmd_path);
+			break ;
 		free(cmd_path);
 	}
 	i = -1;
 	while (paths[++i])
 		free(paths[i]);
 	free(paths);
-	return (NULL);
+	return (cmd_path);
 }
 
-void	execute(char *cmd, char **envp)
+void	execute(char *cmd, t_pipex pipex)
 {
 	char	*env_path;
 	char	**cmd_arr;
 
 	cmd_arr = ft_split(cmd, ' ');
-	env_path = get_path(cmd_arr[0], envp);
-	fprintf(stderr, "env path for:%s = %s\n", cmd, env_path);
-	execve(env_path, cmd_arr, envp);
+	env_path = get_path(cmd_arr[0], pipex.envp);
+	execve(env_path, cmd_arr, pipex.envp);
 }
 
-void	child(int fd1, int *end, char *cmd1, char **envp)
+void	child(t_pipex pipex)
 {
-	dup2(fd1, STDIN_FILENO);
-	dup2(end[1], STDOUT_FILENO);
-	close(end[0]);
-	close(fd1);
-	execute(cmd1, envp);
+	dup2(pipex.fd_infile, STDIN_FILENO);
+	dup2(pipex.end[1], STDOUT_FILENO);
+	close(pipex.end[0]);
+	close(pipex.fd_infile);
+	execute(pipex.argv[2], pipex);
 }
 
-void	parent(int fd2, int *end, char *cmd2, char **envp)
+void	parent(t_pipex pipex)
 {
-	dup2(end[0], STDIN_FILENO);
-	dup2(fd2, STDOUT_FILENO);
-	close(end[1]);
-	close(fd2);
-	execute(cmd2, envp);
+
+	dup2(pipex.end[0], STDIN_FILENO);
+	dup2(pipex.fd_outfile, STDOUT_FILENO);
+	close(pipex.end[1]);
+	close(pipex.fd_outfile);
+	execute(pipex.argv[pipex.argc - 2], pipex);
 }
 
 void	error(char *str)
 {
 	perror(str);
-	exit(-1);
+	exit(1);
 }

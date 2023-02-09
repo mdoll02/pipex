@@ -6,7 +6,7 @@
 /*   By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 09:35:19 by mdoll             #+#    #+#             */
-/*   Updated: 2023/02/06 14:12:23 by mdoll            ###   ########.fr       */
+/*   Updated: 2023/02/09 11:56:33 by mdoll            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,22 @@
 # include <stdio.h> // perror | strerror
 # include <sys/wait.h>
 
-void	pipex(int fd1, int fd2, char **arvg, char **envp);
-void	parent(int fd2, int *end, char *cmd2, char **envp);
+typedef struct s_pipex
+{
+	int		fd_infile;
+	int		fd_outfile;
+	int		end[2];
+	pid_t	pid;
+	char	**argv;
+	char	**envp;
+	int		argc;
+}		t_pipex;
+
+void	ft_pipex(t_pipex pipex);
+void	parent(t_pipex pipex);
 char	*get_path(char *cmd, char **envp);
-void	child(int fd1, int *end, char *cmd1, char **envp);
+void	child(t_pipex pipex);
 void	error(char *str);
-void	execute(char *cmd, char **envp);
+void	execute(char *cmd, t_pipex pipex);
 
 #endif

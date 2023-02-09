@@ -6,7 +6,7 @@
 /*   By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 10:58:34 by mdoll             #+#    #+#             */
-/*   Updated: 2022/12/23 10:04:54 by mdoll            ###   ########.fr       */
+/*   Updated: 2023/02/09 10:47:03 by mdoll            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*jstring;
 	int		i;
 
+	if (!s1 || !s2)
+		return (NULL);
 	len = ft_strlen(s1) + ft_strlen(s2);
 	i = 0;
 	jstring = malloc(len * sizeof(char) + 1);
