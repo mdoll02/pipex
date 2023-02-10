@@ -6,7 +6,7 @@
 #    By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/01 09:23:42 by mdoll             #+#    #+#              #
-#    Updated: 2023/02/10 09:50:16 by mdoll            ###   ########.fr        #
+#    Updated: 2023/02/10 10:02:10 by mdoll            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,6 @@ end =	[0m
 %.o: %.c
 	@ $(CC) -c $(CFLAGS) $< -o ${<:.c=.o}
 
-
 $(NAME): $(OBJS)
 	@ echo "${r}compiling${end}"
 	@ make all -C ./libft >/dev/null 2>&1
@@ -48,7 +47,7 @@ $(NAME): $(OBJS)
 
 all:	${NAME}
 
-bonus:
+bonus: ${BONUS_OBJS}
 	@ echo "${r}compiling${end}"
 	@ make all -C ./libft >/dev/null 2>&1
 	@ cp ./libft/libft.a .
@@ -58,6 +57,7 @@ bonus:
 
 clean:
 	@${RM} $(OBJS)
+	@${RM} $(BONUS_OBJS)
 	@make clean -C ./libft
 	@ echo "${y}cl${bl}ea${p}ne${c}d!${end}"
 
