@@ -6,7 +6,7 @@
 #    By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/01 09:23:42 by mdoll             #+#    #+#              #
-#    Updated: 2023/02/02 15:46:38 by mdoll            ###   ########.fr        #
+#    Updated: 2023/02/10 09:50:16 by mdoll            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,13 @@ NAME	:= pipex
 CC		:= gcc
 CFLAGS	:= -Wall -Wextra -Werror
 
-SRCS	:=	pipex.c pipex_utils.c
+SRCS	:=	mandatory/pipex.c mandatory/pipex_utils.c
 
 OBJS	:= $(SRCS:.c=.o)
+
+BONUS_SRCS	:=	bonus/pipex_bonus.c bonus/pipex_utils_bonus.c
+
+BONUS_OBJS	:= $(BONUS_SRCS:.c=.o)
 
 RM		:= rm -f
 
@@ -44,6 +48,14 @@ $(NAME): $(OBJS)
 
 all:	${NAME}
 
+bonus:
+	@ echo "${r}compiling${end}"
+	@ make all -C ./libft >/dev/null 2>&1
+	@ cp ./libft/libft.a .
+	@ $(CC) $(CFLAGS) -o $(NAME) $(BONUS_OBJS) libft.a
+	@ echo "${g}finished compiling.${end}"
+	@ echo "${bl}Use: ./pipex file1 cmd1 cmd2 ... file2 to run the progam${end}"
+
 clean:
 	@${RM} $(OBJS)
 	@make clean -C ./libft
@@ -58,9 +70,9 @@ fclean:
 
 files: all
 	@ ${RM} *.txt
-	@ touch file1.txt
-	@ touch file2.txt
+	@ touch input
+	@ touch output
 
 re:			fclean all
 
-.PHONY:		all clean fclean re files
+.PHONY:		all clean fclean re files bonus

@@ -6,7 +6,7 @@
 /*   By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 10:26:59 by mdoll             #+#    #+#             */
-/*   Updated: 2023/02/09 12:19:11 by mdoll            ###   ########.fr       */
+/*   Updated: 2023/02/10 09:28:47 by mdoll            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
 
-	pipex.fd_infile = open(argv[1], O_RDONLY);
-	if (pipex.fd_infile == -1)
-		error ("error while opening infile");
-	pipex.fd_outfile = open(argv[argc - 1], O_RDWR | O_TRUNC | O_CREAT, 0644);
-	if (pipex.fd_outfile == -1)
-		error("error while opening outfile");
+	if (argc != 5)
+		error("Invalid number of arguments");
 	pipex.argv = argv;
 	pipex.envp = envp;
 	pipex.argc = argc;

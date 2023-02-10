@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*   pipex_utils_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 13:50:02 by mdoll             #+#    #+#             */
-/*   Updated: 2023/02/09 12:35:11 by mdoll            ###   ########.fr       */
+/*   Updated: 2023/02/10 09:35:00 by mdoll            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/pipex.h"
+#include "./include/pipex_bonus.h"
 
 char	*get_path(char *cmd, char **envp)
 {
@@ -28,14 +28,14 @@ char	*get_path(char *cmd, char **envp)
 		paths[i] = ft_strjoin(paths[i], "/");
 		cmd_path = ft_strjoin(paths[i], cmd);
 		if (access(cmd_path, F_OK) == 0)
-			break ;
+			return (cmd_path);
 		free(cmd_path);
 	}
 	i = -1;
 	while (paths[++i])
 		free(paths[i]);
 	free(paths);
-	return (cmd_path);
+	return (NULL);
 }
 
 void	execute(char *cmd, t_pipex pipex)
@@ -45,11 +45,15 @@ void	execute(char *cmd, t_pipex pipex)
 
 	cmd_arr = ft_split(cmd, ' ');
 	env_path = get_path(cmd_arr[0], pipex.envp);
-	execve(env_path, cmd_arr, pipex.envp);
+	if (execve(env_path, cmd_arr, pipex.envp) < 0)
+		error("execve");
 }
 
 void	child(t_pipex pipex)
 {
+	pipex.fd_infile = open(pipex.argv[1], O_RDONLY);
+	if (pipex.fd_infile == -1)
+		error (pipex.argv[1]);
 	dup2(pipex.fd_infile, STDIN_FILENO);
 	dup2(pipex.end[1], STDOUT_FILENO);
 	close(pipex.end[0]);
@@ -59,7 +63,9 @@ void	child(t_pipex pipex)
 
 void	parent(t_pipex pipex)
 {
-
+	pipex.fd_outfile = open(pipex.argv[4], O_WRONLY | O_TRUNC | O_CREAT, 0644);
+	if (pipex.fd_outfile == -1)
+		error (pipex.argv[4]);
 	dup2(pipex.end[0], STDIN_FILENO);
 	dup2(pipex.fd_outfile, STDOUT_FILENO);
 	close(pipex.end[1]);
