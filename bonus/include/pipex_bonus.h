@@ -6,7 +6,7 @@
 /*   By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 09:35:19 by mdoll             #+#    #+#             */
-/*   Updated: 2023/02/10 09:30:00 by mdoll            ###   ########.fr       */
+/*   Updated: 2023/02/10 13:10:00 by mdoll            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "../../libft/libft.h"
 # include <fcntl.h>
-# include <unistd.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h> // perror | strerror
@@ -38,5 +37,8 @@ char	*get_path(char *cmd, char **envp);
 void	child(t_pipex pipex);
 void	error(char *str);
 void	execute(char *cmd, t_pipex pipex);
+int		check_args(char **argv, int argc);
+void	handel_fd(t_pipex pipex);
+void	here_doc(t_pipex pipex);
 
 #endif

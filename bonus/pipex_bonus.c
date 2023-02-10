@@ -6,7 +6,7 @@
 /*   By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 10:26:59 by mdoll             #+#    #+#             */
-/*   Updated: 2023/02/10 09:29:40 by mdoll            ###   ########.fr       */
+/*   Updated: 2023/02/10 12:15:56 by mdoll            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
 
-	if (argc != 5)
-		error("Invalid number of arguments");
+	if (argc != check_args(argv, argc))
+		error("Wrong number of arguments");
 	pipex.argv = argv;
 	pipex.envp = envp;
 	pipex.argc = argc;

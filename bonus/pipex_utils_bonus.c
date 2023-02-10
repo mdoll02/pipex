@@ -6,7 +6,7 @@
 /*   By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 13:50:02 by mdoll             #+#    #+#             */
-/*   Updated: 2023/02/10 09:35:00 by mdoll            ###   ########.fr       */
+/*   Updated: 2023/02/10 12:29:59 by mdoll            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,7 @@ void	execute(char *cmd, t_pipex pipex)
 
 void	child(t_pipex pipex)
 {
-	pipex.fd_infile = open(pipex.argv[1], O_RDONLY);
-	if (pipex.fd_infile == -1)
-		error (pipex.argv[1]);
+	handel_fd(pipex);
 	dup2(pipex.fd_infile, STDIN_FILENO);
 	dup2(pipex.end[1], STDOUT_FILENO);
 	close(pipex.end[0]);
@@ -63,9 +61,7 @@ void	child(t_pipex pipex)
 
 void	parent(t_pipex pipex)
 {
-	pipex.fd_outfile = open(pipex.argv[4], O_WRONLY | O_TRUNC | O_CREAT, 0644);
-	if (pipex.fd_outfile == -1)
-		error (pipex.argv[4]);
+	handel_fd(pipex);
 	dup2(pipex.end[0], STDIN_FILENO);
 	dup2(pipex.fd_outfile, STDOUT_FILENO);
 	close(pipex.end[1]);
