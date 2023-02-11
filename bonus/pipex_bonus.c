@@ -6,7 +6,7 @@
 /*   By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 10:26:59 by mdoll             #+#    #+#             */
-/*   Updated: 2023/02/10 12:15:56 by mdoll            ###   ########.fr       */
+/*   Updated: 2023/02/11 12:11:08 by mdoll            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,24 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
+	int		cmd_count;
 
-	if (argc != check_args(argv, argc))
-		error("Wrong number of arguments");
+	if (argc < 5)
+		error("Invalid number of arguments");
+	cmd_count = 2;
 	pipex.argv = argv;
 	pipex.envp = envp;
 	pipex.argc = argc;
-	ft_pipex(pipex);
+	while (cmd_count < argc - 2)
+	{
+		ft_pipex(pipex, cmd_count);
+		cmd_count++;
+	}
+	parent(pipex);
 	return (0);
 }
 
-void	ft_pipex(t_pipex pipex)
+void	ft_pipex(t_pipex pipex, int cmd_count)
 {
 	int		pipe_ret;
 
@@ -36,8 +43,6 @@ void	ft_pipex(t_pipex pipex)
 	if (pipex.pid == -1)
 		error("error while forking");
 	if (pipex.pid == 0)
-		child(pipex);
+		child(pipex, cmd_count);
 	waitpid(pipex.pid, NULL, WNOHANG);
-	if (pipex.pid > 0)
-		parent(pipex);
 }
