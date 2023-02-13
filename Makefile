@@ -6,7 +6,7 @@
 #    By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/01 09:23:42 by mdoll             #+#    #+#              #
-#    Updated: 2023/02/10 13:11:16 by mdoll            ###   ########.fr        #
+#    Updated: 2023/02/13 09:33:35 by mdoll            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRCS	:=	mandatory/pipex.c mandatory/pipex_utils.c
 
 OBJS	:= $(SRCS:.c=.o)
 
-BONUS_SRCS	:=	bonus/pipex_bonus.c bonus/pipex_utils_bonus.c bonus/check.c
+BONUS_SRCS	:=	bonus/pipex_bonus.c bonus/pipex_utils_bonus.c
 
 BONUS_OBJS	:= $(BONUS_SRCS:.c=.o)
 

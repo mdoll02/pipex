@@ -6,7 +6,7 @@
 /*   By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 13:50:02 by mdoll             #+#    #+#             */
-/*   Updated: 2023/02/11 12:14:21 by mdoll            ###   ########.fr       */
+/*   Updated: 2023/02/13 08:44:23 by mdoll            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,31 +47,6 @@ void	execute(char *cmd, t_pipex pipex)
 	env_path = get_path(cmd_arr[0], pipex.envp);
 	if (execve(env_path, cmd_arr, pipex.envp) < 0)
 		error("execve");
-}
-
-void	child(t_pipex pipex, int cmd_count)
-{
-	pipex.fd_infile = open(pipex.argv[1], O_RDONLY);
-	if (pipex.fd_infile == -1)
-		error (pipex.argv[1]);
-	dup2(pipex.fd_infile, STDIN_FILENO);
-	dup2(pipex.end[1], STDOUT_FILENO);
-	close(pipex.end[0]);
-	close(pipex.fd_infile);
-	execute(pipex.argv[cmd_count], pipex);
-}
-
-void	parent(t_pipex pipex)
-{
-	pipex.fd_outfile = open(pipex.argv[pipex.argc - 1], \
-		O_WRONLY | O_TRUNC | O_CREAT, 0644);
-	if (pipex.fd_outfile == -1)
-		error (pipex.argv[pipex.argc - 1]);
-	dup2(pipex.end[0], STDIN_FILENO);
-	dup2(pipex.fd_outfile, STDOUT_FILENO);
-	close(pipex.end[1]);
-	close(pipex.fd_outfile);
-	execute(pipex.argv[pipex.argc - 2], pipex);
 }
 
 void	error(char *str)
