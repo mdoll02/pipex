@@ -6,7 +6,7 @@
 /*   By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 13:50:02 by mdoll             #+#    #+#             */
-/*   Updated: 2023/02/11 12:13:41 by mdoll            ###   ########.fr       */
+/*   Updated: 2023/02/14 13:44:16 by mdoll            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,20 @@ void	execute(char *cmd, t_pipex pipex)
 	char	*env_path;
 	char	**cmd_arr;
 
-	cmd_arr = ft_split(cmd, ' ');
+	cmd_arr = check_for_special(cmd);
 	env_path = get_path(cmd_arr[0], pipex.envp);
+	int i = 0;
+	while (cmd_arr[i])
+	{
+		fprintf(stderr, "comman part: %s\n", cmd_arr[i]);
+		i++;
+	}
+	if (!env_path)
+		error("command not found");
 	if (execve(env_path, cmd_arr, pipex.envp) < 0)
 		error("execve");
+	free(env_path);
+	free(cmd_arr);
 }
 
 void	child(t_pipex pipex)

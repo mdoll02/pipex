@@ -6,7 +6,7 @@
 /*   By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 09:35:19 by mdoll             #+#    #+#             */
-/*   Updated: 2023/02/10 09:26:48 by mdoll            ###   ########.fr       */
+/*   Updated: 2023/02/14 13:27:20 by mdoll            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,7 @@ char	*get_path(char *cmd, char **envp);
 void	child(t_pipex pipex);
 void	error(char *str);
 void	execute(char *cmd, t_pipex pipex);
+
+char	**check_for_special(char *cmd);
 
 #endif

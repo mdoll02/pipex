@@ -6,7 +6,7 @@
 #    By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/01 09:23:42 by mdoll             #+#    #+#              #
-#    Updated: 2023/02/13 09:33:35 by mdoll            ###   ########.fr        #
+#    Updated: 2023/02/14 13:26:49 by mdoll            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME	:= pipex
 CC		:= gcc
 CFLAGS	:= -Wall -Wextra -Werror
 
-SRCS	:=	mandatory/pipex.c mandatory/pipex_utils.c
+SRCS	:=	mandatory/pipex.c mandatory/pipex_utils.c mandatory/special_split.c
 
 OBJS	:= $(SRCS:.c=.o)
 

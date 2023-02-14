@@ -6,12 +6,11 @@
 /*   By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 09:39:06 by mdoll             #+#    #+#             */
-/*   Updated: 2022/12/23 10:03:56 by mdoll            ###   ########.fr       */
+/*   Updated: 2023/02/14 11:40:52 by mdoll            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
 // is countting how many strings should be created
 static int	ft_count_char(const char *s, char c)
