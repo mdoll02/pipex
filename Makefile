@@ -6,7 +6,7 @@
 #    By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/01 09:23:42 by mdoll             #+#    #+#              #
-#    Updated: 2023/02/14 14:43:03 by mdoll            ###   ########.fr        #
+#    Updated: 2023/02/15 15:07:28 by mdoll            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,13 +47,13 @@ $(NAME): $(OBJS)
 
 all:	${NAME}
 
-bonus: ${BONUS_OBJS}
-	@ echo "${r}compiling${end}"
-	@ make all -C ./libft >/dev/null 2>&1
-	@ cp ./libft/libft.a .
-	@ $(CC) $(CFLAGS) -o $(NAME) $(BONUS_OBJS) libft.a
-	@ echo "${g}finished compiling.${end}"
-	@ echo "${bl}Use: ./pipex file1 cmd1 cmd2 ... file2 to run the progam${end}"
+#bonus: ${BONUS_OBJS}
+#	@ echo "${r}compiling${end}"
+#	@ make all -C ./libft >/dev/null 2>&1
+#	@ cp ./libft/libft.a .
+#	@ $(CC) $(CFLAGS) -o $(NAME) $(BONUS_OBJS) libft.a
+#	@ echo "${g}finished compiling.${end}"
+#	@ echo "${bl}Use: ./pipex file1 cmd1 cmd2 ... file2 to run the progam${end}"
 
 clean:
 	@${RM} $(OBJS)

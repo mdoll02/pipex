@@ -6,7 +6,7 @@
 /*   By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 09:45:07 by mdoll             #+#    #+#             */
-/*   Updated: 2023/02/14 14:22:01 by mdoll            ###   ########.fr       */
+/*   Updated: 2023/02/15 15:00:32 by mdoll            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,14 @@ static int	ft_count_char(char *s)
 			while (s[i] == ' ' && s[i])
 				i++;
 			count++;
+		}
+		if (s[i] == 34)
+		{
+			i++;
+			while (s[i] != 34 && s[i])
+				i++;
+			if (s[i + 1] != '\0')
+				count++;
 		}
 		if (s[i] == 39)
 		{
@@ -50,7 +58,14 @@ static void	ft_count(char *s, size_t *i_, size_t *len_)
 	while (s[i] == ' ' && s[i])
 		i++;
 	len = i;
-	if (s[len] == 39)
+	if (s[len] == 34)
+	{
+		len++;
+		while (s[len] != 34 && s[len] != '\0')
+			len++;
+		i++;
+	}
+	else if (s[len] == 39)
 	{
 		len++;
 		while (s[len] != 39 && s[len] != '\0')
@@ -118,8 +133,6 @@ char	**check_for_special(char *cmd)
 	{
 		if (cmd[i] == 34 || cmd[i] == 39)
 			count++;
-		if (cmd[i] == 34)
-			cmd[i] = 39;
 		i++;
 	}
 	if (count % 2 != 0)
