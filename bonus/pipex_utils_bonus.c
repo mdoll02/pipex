@@ -6,7 +6,7 @@
 /*   By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 13:50:02 by mdoll             #+#    #+#             */
-/*   Updated: 2023/02/14 14:44:14 by mdoll            ###   ########.fr       */
+/*   Updated: 2023/02/15 12:51:51 by mdoll            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,11 @@ void	execute(char *cmd, t_pipex pipex)
 	cmd_arr = check_for_special(cmd);
 	env_path = get_path(cmd_arr[0], pipex.envp);
 	if (!env_path)
-		error("command not found");
+	{
+		ft_putstr_fd(cmd_arr[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+		exit(1);
+	}
 	if (execve(env_path, cmd_arr, pipex.envp) < 0)
 		error("execve");
 	free(env_path);

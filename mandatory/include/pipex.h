@@ -6,7 +6,7 @@
 /*   By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 09:35:19 by mdoll             #+#    #+#             */
-/*   Updated: 2023/02/14 13:27:20 by mdoll            ###   ########.fr       */
+/*   Updated: 2023/02/15 12:40:16 by mdoll            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <unistd.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h> // perror | strerror
+# include <stdio.h>
 # include <sys/wait.h>
 
 typedef struct s_pipex
