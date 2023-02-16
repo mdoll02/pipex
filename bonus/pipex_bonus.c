@@ -6,7 +6,7 @@
 /*   By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 10:26:59 by mdoll             #+#    #+#             */
-/*   Updated: 2023/02/16 11:15:18 by mdoll            ###   ########.fr       */
+/*   Updated: 2023/02/16 12:38:46 by mdoll            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,8 @@ void	open_files(t_pipex *pipex, char **argv, int argc)
 	pipex->fd_outfile = open(argv[argc - 1], O_WRONLY | \
 		O_TRUNC | O_CREAT, 0644);
 	if (pipex->fd_outfile == -1)
-		error_msg(argv[argc - 1]);
+		error_msg(argv[argc - 1], -1);
 	pipex->fd_infile = open(argv[1], O_RDONLY);
 	if (pipex->fd_infile == -1)
-	{
-		write(pipex->fd_outfile, "       0\n", 9);
-		error_msg(pipex->argv[1]);
-	}
+		error_msg(pipex->argv[1], pipex->fd_outfile);
 }

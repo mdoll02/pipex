@@ -6,7 +6,7 @@
 /*   By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 13:50:02 by mdoll             #+#    #+#             */
-/*   Updated: 2023/02/16 11:22:07 by mdoll            ###   ########.fr       */
+/*   Updated: 2023/02/16 12:39:34 by mdoll            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,10 @@ void	error(char *str)
 	exit(1);
 }
 
-void	error_msg(char *str)
+void	error_msg(char *str, int fd)
 {
+	if (fd != -1)
+		write(fd, "       0\n", 9);
 	write(STDERR_FILENO, "pipex: ", 7);
 	perror(str);
 	exit(0);

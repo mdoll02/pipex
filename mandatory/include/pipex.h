@@ -6,7 +6,7 @@
 /*   By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 09:35:19 by mdoll             #+#    #+#             */
-/*   Updated: 2023/02/16 10:05:38 by mdoll            ###   ########.fr       */
+/*   Updated: 2023/02/16 12:37:26 by mdoll            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*get_path(char *cmd, char *envp_paths);
 char	*get_env_paths(char **envp);
 
 void	error(char *str);
-void	error_msg(char *str);
+void	error_msg(char *str, int fd);
 
 char	**check_for_special(char *cmd);
 int		count_quotes(int *i, char *str);

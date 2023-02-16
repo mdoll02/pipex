@@ -6,7 +6,7 @@
 /*   By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 10:26:59 by mdoll             #+#    #+#             */
-/*   Updated: 2023/02/16 09:52:16 by mdoll            ###   ########.fr       */
+/*   Updated: 2023/02/16 12:39:00 by mdoll            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,10 @@ int	main(int argc, char **argv, char **envp)
 	pipex.argc = argc;
 	pipex.fd_outfile = open(argv[4], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (pipex.fd_outfile == -1)
-		error_msg(pipex.argv[4]);
+		error_msg(pipex.argv[4], -1);
 	pipex.fd_infile = open(argv[1], O_RDONLY);
 	if (pipex.fd_infile == -1)
-	{
-		write(pipex.fd_outfile, "       0\n", 9);
-		error_msg(pipex.argv[1]);
-	}
+		error_msg(pipex.argv[1], pipex.fd_outfile);
 	pipex.env_paths = get_env_paths(envp);
 	ft_pipex(pipex);
 	return (0);
@@ -58,8 +55,10 @@ void	error(char *str)
 	exit(1);
 }
 
-void	error_msg(char *str)
+void	error_msg(char *str, int fd)
 {
+	if (fd != -1)
+		write(fd, "       0\n", 9);
 	write(STDERR_FILENO, "pipex: ", 7);
 	perror(str);
 	exit(0);
