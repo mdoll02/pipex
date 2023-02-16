@@ -6,7 +6,7 @@
 /*   By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 09:45:07 by mdoll             #+#    #+#             */
-/*   Updated: 2023/02/15 15:00:32 by mdoll            ###   ########.fr       */
+/*   Updated: 2023/02/16 10:08:13 by mdoll            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,58 +27,36 @@ static int	ft_count_char(char *s)
 				i++;
 			count++;
 		}
-		if (s[i] == 34)
-		{
-			i++;
-			while (s[i] != 34 && s[i])
-				i++;
-			if (s[i + 1] != '\0')
-				count++;
-		}
-		if (s[i] == 39)
-		{
-			i++;
-			while (s[i] != 39 && s[i])
-				i++;
-			if (s[i + 1] != '\0')
-				count++;
-		}
+		count += count_quotes(&i, s);
 		i++;
 	}
 	return (count);
 }
 
-static void	ft_count(char *s, size_t *i_, size_t *len_)
+static void	ft_count(char *s, size_t *i, size_t *len)
 {
-	size_t	i;
-	size_t	len;
-
-	i = *i_;
-	len = *len_;
-	while (s[i] == ' ' && s[i])
-		i++;
-	len = i;
-	if (s[len] == 34)
+	while (s[(*i)] == ' ' && s[(*i)])
+		(*i)++;
+	(*len) = (*i);
+	if (s[(*len)] == 34)
 	{
-		len++;
-		while (s[len] != 34 && s[len] != '\0')
-			len++;
-		i++;
+		(*len)++;
+		while (s[(*len)] != 34 && s[(*len)] != '\0')
+			(*len)++;
+		(*i)++;
 	}
-	else if (s[len] == 39)
+	else if (s[(*len)] == 39)
 	{
-		len++;
-		while (s[len] != 39 && s[len] != '\0')
-			len++;
-		i++;
+		(*len)++;
+		while (s[(*len)] != 39 && s[(*len)] != '\0')
+			(*len)++;
+		(*i)++;
 	}
 	else
 	{
-		while (s[len] != ' ' && s[len] != '\0')
-			len++;
+		while (s[(*len)] != ' ' && s[(*len)] != '\0')
+			(*len)++;
 	}
-	*len_ = len;
-	*i_ = i;
 }
 
 static char	**ft_free(char **arr)

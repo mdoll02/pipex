@@ -6,7 +6,7 @@
 /*   By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 10:26:59 by mdoll             #+#    #+#             */
-/*   Updated: 2023/02/13 09:40:27 by mdoll            ###   ########.fr       */
+/*   Updated: 2023/02/16 11:15:18 by mdoll            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,8 @@ int	main(int argc, char **argv, char **envp)
 	pipex.argv = argv;
 	pipex.envp = envp;
 	pipex.argc = argc;
-	pipex.fd_infile = open(pipex.argv[1], O_RDONLY);
-	if (pipex.fd_infile == -1)
-		error (pipex.argv[1]);
-	pipex.fd_outfile = open(pipex.argv[argc - 1], \
-		O_WRONLY | O_TRUNC | O_CREAT, 0644);
-	if (pipex.fd_outfile == -1)
-		error (pipex.argv[argc - 1]);
+	open_files(&pipex, argv, argc);
+	pipex.env_paths = get_env_paths(envp);
 	dup2(pipex.fd_infile, STDIN_FILENO);
 	while (cmd_count < argc - 2)
 	{
@@ -63,5 +58,19 @@ void	ft_pipex(t_pipex pipex, int cmd_count)
 		close(end[1]);
 		dup2(end[0], STDIN_FILENO);
 		waitpid(pipex.pid, NULL, WNOHANG);
+	}
+}
+
+void	open_files(t_pipex *pipex, char **argv, int argc)
+{
+	pipex->fd_outfile = open(argv[argc - 1], O_WRONLY | \
+		O_TRUNC | O_CREAT, 0644);
+	if (pipex->fd_outfile == -1)
+		error_msg(argv[argc - 1]);
+	pipex->fd_infile = open(argv[1], O_RDONLY);
+	if (pipex->fd_infile == -1)
+	{
+		write(pipex->fd_outfile, "       0\n", 9);
+		error_msg(pipex->argv[1]);
 	}
 }
