@@ -6,7 +6,7 @@
 #    By: mdoll <mdoll@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/01 09:23:42 by mdoll             #+#    #+#              #
-#    Updated: 2023/02/16 11:29:38 by mdoll            ###   ########.fr        #
+#    Updated: 2023/02/17 12:43:44 by mdoll            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,11 +70,6 @@ fclean:
 	@ ${RM} libft.a
 	@ echo "${y}eve${bl}ryt${p}hi${c}ng${end}"
 	@ make clean
-
-files: all
-	@ ${RM} *.txt
-	@ touch input
-	@ touch output
 
 re:			fclean all
 
